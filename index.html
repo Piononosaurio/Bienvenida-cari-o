@@ -70,11 +70,26 @@
       0% { transform: translateY(0); opacity: 1; }
       100% { transform: translateY(-100vh); opacity: 0; }
     }
+
+    #toggleMusica {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #ffccff;
+      border: 2px solid #ff99cc;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 1.5em;
+      cursor: pointer;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+      display: none;
+    }
   </style>
 </head>
 <body>
 
-<audio autoplay loop>
+<audio id="musica" loop>
   <source src="musica.mp3" type="audio/mpeg">
   Tu navegador no soporta audio HTML5.
 </audio>
@@ -86,17 +101,22 @@
   <button class="siguiente" id="siguienteBtn" onclick="mostrarSiguiente()" style="display:none;">Siguiente 💌</button>
 </div>
 
+<!-- Botón para controlar la música -->
+<button id="toggleMusica" title="Pausar música 🎵">⏸️</button>
+
 <script>
   const mensajes = [
     "Desde que apareciste en mi vida, sentí que desbloqueé el nivel más hermoso de todos.",
-    "Que loco verdad? Pensar que antes no sabia nada de tí, y un dia de la nada, por una casualidad cuando hablamos, sentimos una química increible.",
-    "nunca imagine, que el impacto seria enorme, al nivel de que no me imagino ni quiero un futuro en el que no este junto a tí.",
-    "Estoy feliz de poder haberte cruzado en este mundo, me encanta cada parte de ti, tu voz, tu cabello, tu cuerpo, tu carita to bonita, con o sin maquillaje.",
-    "Realmente te ves increible mi niña, te quiero muchisimo, me iluminas la vida y haces que mis latidos tengan sentido, haciendo feliz en cada momento que comparto y pienso en ti.",
+    "Qué loco, ¿verdad? Pensar que antes no sabía nada de ti, y un día de la nada, por una casualidad, cuando hablamos, sentimos una química increíble.",
+    "Nunca imaginé que el impacto sería enorme, al nivel de que no me imagino ni quiero un futuro en el que no esté junto a ti.",
+    "Estoy feliz de poder haberte cruzado en este mundo. Me encanta cada parte de ti: tu voz, tu cabello, tu cuerpo, tu carita tan bonita, con o sin maquillaje.",
+    "Realmente te ves increíble, mi niña. Te quiero muchísimo. Me iluminas la vida y haces que mis latidos tengan sentido, haciéndome feliz en cada momento que comparto y pienso en ti.",
     "Quiero seguir jugando esta aventura de la vida a tu lado 🎮💗"
   ];
 
   let indice = 0;
+  const musica = document.getElementById("musica");
+  const toggleBtn = document.getElementById("toggleMusica");
 
   function mostrarSiguiente() {
     const mensajeDiv = document.getElementById("mensaje");
@@ -104,7 +124,9 @@
     const inicioBtn = document.getElementById("inicioBtn");
 
     if (indice === 0) {
-      inicioBtn.style.display = "none"; // ocultar el botón de inicio
+      inicioBtn.style.display = "none";
+      musica.play().catch(e => console.log("Error al reproducir música:", e));
+      toggleBtn.style.display = "block";
     }
 
     mensajeDiv.style.display = "block";
@@ -117,6 +139,18 @@
       siguienteBtn.style.display = "none";
     }
   }
+
+  toggleBtn.addEventListener("click", () => {
+    if (musica.paused) {
+      musica.play();
+      toggleBtn.textContent = "⏸️";
+      toggleBtn.title = "Pausar música 🎵";
+    } else {
+      musica.pause();
+      toggleBtn.textContent = "▶️";
+      toggleBtn.title = "Reanudar música 🎵";
+    }
+  });
 
   // Corazones flotantes
   function crearCorazon() {
