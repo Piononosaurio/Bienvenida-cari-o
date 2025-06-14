@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Para mi Jugadora Favorita</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(120deg, #fcd1f5, #d1ecfc);
+      overflow: hidden;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #ff66b2;
+      text-shadow: 2px 2px #ffffff;
+    }
+
+    .boton, .siguiente {
+      background-color: #ffccff;
+      color: #333;
+      padding: 15px 25px;
+      border: 2px solid #ff99cc;
+      border-radius: 12px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+    }
+
+    .boton:hover, .siguiente:hover {
+      background-color: #ff99cc;
+      color: white;
+    }
+
+    .mensaje {
+      display: none;
+      font-size: 1.3em;
+      margin-top: 30px;
+      color: #444;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 25px;
+      border-radius: 16px;
+      max-width: 700px;
+    }
+
+    .corazon {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: url('https://i.imgur.com/1XhPZV0.png') no-repeat center;
+      background-size: contain;
+      animation: flotar linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<audio autoplay loop>
+  <source src="musica.mp3" type="audio/mpeg">
+  Tu navegador no soporta audio HTML5.
+</audio>
+
+<div class="container">
+  <h1>🎮 Eres mi jugadora favorita 💖</h1>
+  <button class="boton" id="inicioBtn" onclick="mostrarSiguiente()">Haz clic para comenzar</button>
+  <div class="mensaje" id="mensaje"></div>
+  <button class="siguiente" id="siguienteBtn" onclick="mostrarSiguiente()" style="display:none;">Siguiente 💌</button>
+</div>
+
+<script>
+  const mensajes = [
+    "Desde que apareciste en mi vida, sentí que desbloqueé el nivel más hermoso de todos.",
+    "Que loco verdad? Pensar que antes no sabia nada de tí, y un dia de la nada, por una casualidad cuando hablamos, sentimos una química increible.",
+    "nunca imagine, que el impacto seria enorme, al nivel de que no me imagino ni quiero un futuro en el que no este junto a tí.",
+    "Estoy feliz de poder haberte cruzado en este mundo, me encanta cada parte de ti, tu voz, tu cabello, tu cuerpo, tu carita to bonita, con o sin maquillaje.",
+    "Realmente te ves increible mi niña, te quiero muchisimo, me iluminas la vida y haces que mis latidos tengan sentido, haciendo feliz en cada momento que comparto y pienso en ti.",
+    "Quiero seguir jugando esta aventura de la vida a tu lado 🎮💗"
+  ];
+
+  let indice = 0;
+
+  function mostrarSiguiente() {
+    const mensajeDiv = document.getElementById("mensaje");
+    const siguienteBtn = document.getElementById("siguienteBtn");
+    const inicioBtn = document.getElementById("inicioBtn");
+
+    if (indice === 0) {
+      inicioBtn.style.display = "none"; // ocultar el botón de inicio
+    }
+
+    mensajeDiv.style.display = "block";
+    mensajeDiv.innerHTML = mensajes[indice];
+
+    if (indice < mensajes.length - 1) {
+      siguienteBtn.style.display = "inline-block";
+      indice++;
+    } else {
+      siguienteBtn.style.display = "none";
+    }
+  }
+
+  // Corazones flotantes
+  function crearCorazon() {
+    const corazon = document.createElement('div');
+    corazon.classList.add('corazon');
+    corazon.style.left = Math.random() * 100 + "vw";
+    corazon.style.animationDuration = (Math.random() * 3 + 2) + "s";
+    document.body.appendChild(corazon);
+    setTimeout(() => corazon.remove(), 5000);
+  }
+  setInterval(crearCorazon, 300);
+</script>
+
+</body>
+</html>
